@@ -1,29 +1,11 @@
 pipeline {
     agent any
-    
     stages {
-        stage('Build Example App') {
+        stage('Checkout') {
             steps {
-                script {
-                    dir('example-app') {
-                        docker.build("example-app:${env.BUILD_ID}")
-                    }
-                }
+                git url: 'https://github.com/ThanHtutPC/docker-simple-app.git'
             }
         }
-        
-        stage('Test Example App') {
-            steps {
-                script {
-                    docker.image("example-app:${env.BUILD_ID}").run()
-                }
-            }
-        }
-    }
-    
-    post {
-        always {
-            cleanWs()
-        }
+        // other stages...
     }
 }
